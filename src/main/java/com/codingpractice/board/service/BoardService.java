@@ -11,4 +11,8 @@ public interface BoardService {
 
     // 게시물 전체 조회
     List<BoardDTO> findAll();
+
+    void updateHits(Long id);
+
+    BoardDTO findById(Long id);
 }

@@ -23,4 +23,16 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDTO> findAll() {
         return boardRepository.findAll();
     }
+
+    @Override
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    @Override
+    public BoardDTO findById(Long id) {
+        return boardRepository.findById(id);
+    }
+
+
 }
