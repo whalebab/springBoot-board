@@ -34,5 +34,13 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findById(id);
     }
 
+    @Override
+    public void update(BoardDTO boardDTO) {
+        boardRepository.update(boardDTO);
+    }
 
+    @Override
+    public void delete(Long id) {
+        boardRepository.delete(id);
+    }
 }

@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class BoardController {
     public String addBoard(@ModelAttribute BoardDTO boardDTO) {
         log.info("boardDTO = {}", boardDTO);
         boardService.save(boardDTO);
-        return "index";
+        return "redirect:/list";
     }
 
     /**
@@ -62,6 +59,36 @@ public class BoardController {
         model.addAttribute("board", board);
         log.info("board ={}" , board);
         return "detail";
+    }
+
+    /**
+     * 게시글 수정 폼이동
+     */
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable("id") Long id, Model model) {
+        BoardDTO board = boardService.findById(id);
+        model.addAttribute("board", board);
+        return "update";
+    }
+
+    /**
+     * 게시글 수정
+     */
+    @PostMapping("/update/{id}")
+    public String update(BoardDTO boardDTO, Model model) {
+        boardService.update(boardDTO);
+        BoardDTO dto = boardService.findById(boardDTO.getId());
+        model.addAttribute("board", dto);
+        return "detail";
+    }
+
+    /**
+     * 게시글 삭제
+     */
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        boardService.delete(id);
+        return "redirect:/list";
     }
 
 }
